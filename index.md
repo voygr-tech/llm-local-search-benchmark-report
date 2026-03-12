@@ -2,8 +2,6 @@
 
 > LLMs can write poetry and pass bar exams, but ask them to find an open restaurant nearby and they'll confidently send you to a place that closed two years ago.
 
-⚠️ **Work in progress**
-
 We tested **4 leading LLMs** on **345 real-world local search prompts** (finding restaurants, checking hours, planning routes, booking tables) across **50+ cities on 6 continents**. Each provider was tested with and without web search (**2,415 total evaluations**). Every recommended place was verified against Google Search and Google Maps.
 
 This page presents the key findings. For the complete analysis (per-category breakdowns, full failure taxonomy, geographic gap deep dive, methodology details, and all 345 benchmark prompts), **[get the full report](#get-the-full-report)**.
@@ -12,12 +10,49 @@ This page presents the key findings. For the complete analysis (per-category bre
 
 ## Overall Performance
 
-| Provider | Model | Score (/100) | Completeness | Accuracy | Constraint Match | Plausibility |
-|---|---|---|---|---|---|---|
-| **OpenAI ON** | gpt-5.2 | **90.7** | 100% | 92% | 85% | 91% |
-| **Gemini ON** | gemini-2.5-flash | 86.4 | 91% | 92% | 77% | 76% |
-| **Claude ON** | claude-sonnet-4-5 | 85.9 | 99% | 89% | 76% | 79% |
-| **Perplexity ON** | sonar-pro | 80.4 | 97% | 86% | 69% | 71% |
+<p align="center">
+  <img src="../data/Overall_Performance.png" alt="Overall Performance by Provider and Search Config" width="700">
+</p>
+
+<table>
+<tr>
+<th>Provider</th><th>Model</th><th>Score (/100)</th><th>Completeness</th><th>Accuracy</th><th>Constraint Match</th><th>Plausibility</th>
+</tr>
+<tr>
+<td><strong>OpenAI ON</strong></td><td>gpt-5.2</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span><strong>90.7</strong></td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>100%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>92%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>85%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>91%</td>
+</tr>
+<tr>
+<td><strong>Gemini ON</strong></td><td>gemini-2.5-flash</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>86.4</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>91%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>92%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>77%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>76%</td>
+</tr>
+<tr>
+<td><strong>Claude ON</strong></td><td>claude-sonnet-4-5</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>85.9</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>99%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>89%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>76%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>79%</td>
+</tr>
+<tr>
+<td><strong>Perplexity ON</strong></td><td>sonar-pro</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>80.4</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>97%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>86%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#B2EBF2;vertical-align:middle;margin-right:4px;"></span>69%</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>71%</td>
+</tr>
+</table>
+
+> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:2px;"></span> 90%+ · <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:2px;"></span> 80-89% · <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:2px;"></span> 70-79% · <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#B2EBF2;vertical-align:middle;margin-right:2px;"></span> <70%
 
 OpenAI leads by 4.3 points. No single provider wins everything, though. Rankings shift by task type. And even the best performer recommends a place that doesn't exist, is permanently closed, or is in the wrong neighborhood **8% of the time**.
 
@@ -42,6 +77,10 @@ We asked Claude (without search) to rank the top 5 yoga studios in Hawthorne Dis
 
 Without search, **1 in 5 places Claude recommends** has a fatal flaw: fabricated, permanently closed, or wrong location. Even Perplexity, a search-native product, has a 12% failure rate with search enabled.
 
+<p align="center">
+  <img src="../data/Share_of_POIs_flawed.png" alt="Share of POIs with Fatal Flaws by Provider and Search Config" width="700" style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px;">
+</p>
+
 | Failure Type | What Happens | Example |
 |---|---|---|
 | **Fabrication** | LLM invents a place with confident false details | 4/5 yoga studios in Portland don't exist, complete with prices and instructor bios |
@@ -59,11 +98,29 @@ Without search, **1 in 5 places Claude recommends** has a fatal flaw: fabricated
 
 Enabling search helps when you're looking for places (+10 to +21 points on discovery). On transactional tasks ("help me book a table"), it actively hurts:
 
-| Provider | Search OFF | Search ON | Delta |
-|---|---|---|---|
-| OpenAI | 87.8 | 88.9 | +1.1 |
-| Gemini | 84.0 | 78.7 | **-5.3** |
-| Claude | 89.6 | 84.1 | **-5.5** |
+<table>
+<tr>
+<th>Provider</th><th>Search OFF</th><th>Search ON</th><th>Delta</th>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>87.8</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>88.9</td>
+<td>+1.1</td>
+</tr>
+<tr>
+<td>Gemini</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>84.0</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>78.7</td>
+<td><strong>-5.3</strong></td>
+</tr>
+<tr>
+<td>Claude</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>89.6</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>84.1</td>
+<td><strong>-5.5</strong></td>
+</tr>
+</table>
 
 *Merchant/booking task scores. Claude and Gemini lose 5+ points with search enabled.*
 
@@ -79,13 +136,48 @@ The pattern extends to navigation: Gemini's own Maps grounding makes it *worse* 
 
 Rankings shift dramatically by task type:
 
-| Use Case | Prompts | OpenAI ON | Gemini ON | Claude ON | Perplexity ON |
-|---|---|---|---|---|---|
-| **Obtain Place Details** | 100 | **94.7** | 93.2 | 91.4 | 88.1 |
-| **Share with Others** | 30 | 94.5 | **96.1** | 92.6 | 83.2 |
-| **Plan / Navigate** | 80 | **91.0** | 81.0 | 89.2 | 82.5 |
-| **Engage Merchant** | 30 | **88.9** | 78.7 | 84.1 | 87.1 |
-| **Explore / Discover** | 105 | **86.9** | 84.0 | 77.8 | 70.2 |
+<table>
+<tr>
+<th>Use Case</th><th>Prompts</th><th>OpenAI ON</th><th>Gemini ON</th><th>Claude ON</th><th>Perplexity ON</th>
+</tr>
+<tr>
+<td><strong>Obtain Place Details</strong></td><td>100</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span><strong>94.7</strong></td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>93.2</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>91.4</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>88.1</td>
+</tr>
+<tr>
+<td><strong>Share with Others</strong></td><td>30</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>94.5</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span><strong>96.1</strong></td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span>92.6</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>83.2</td>
+</tr>
+<tr>
+<td><strong>Plan / Navigate</strong></td><td>80</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:4px;"></span><strong>91.0</strong></td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>81.0</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>89.2</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>82.5</td>
+</tr>
+<tr>
+<td><strong>Engage Merchant</strong></td><td>30</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span><strong>88.9</strong></td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>78.7</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>84.1</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>87.1</td>
+</tr>
+<tr>
+<td><strong>Explore / Discover</strong></td><td>105</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span><strong>86.9</strong></td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:4px;"></span>84.0</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>77.8</td>
+<td><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:4px;"></span>70.2</td>
+</tr>
+</table>
+
+> <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#00897B;vertical-align:middle;margin-right:2px;"></span> 90+ · <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#26A69A;vertical-align:middle;margin-right:2px;"></span> 80-89 · <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#4DD0E1;vertical-align:middle;margin-right:2px;"></span> 70-79 · <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#B2EBF2;vertical-align:middle;margin-right:2px;"></span> <70
 
 - **OpenAI**: The reliable all-rounder. Leads or ties in 4 of 5 categories. Best consistency (std dev 13.0). The provider you pick when you can't afford failures.
 - **Gemini**: The specialist with extremes. Best foundational accuracy (1.6% fatal rate) thanks to Maps grounding, but last on booking and navigation, where that same grounding *hurts*.
@@ -148,10 +240,20 @@ The complete analysis includes:
 
 ---
 
+## Bridging the Gap: Point Validation API
+
+The failure modes we found (fabricated places, closed venues, wrong locations) are verifiable, automatable checks. We built a **Point Validation API** that sits between LLM output and your users, catching these failures before they reach production.
+
+Pass in a place name and location from any LLM response and get back: existence verification, operating status, name/category resolution, and location constraint checks. These are the exact checks that would have caught every fatal flaw in this benchmark.
+
+**[Try the API →](https://PLACEHOLDER_API_DOCS_URL)** · [See the docs on GitHub](https://PLACEHOLDER_API_REPO_URL)
+
+---
+
 ## About
 
 Built by [VOYGR](https://voygr.tech). Comprehensive, up-to-date place data and intelligent local search for AI apps, agents, and analytics.
 
-The benchmark framework is [open source on GitHub](https://github.com/voygr-tech/llm-geospatial-benchmark). We plan to rerun it as new model versions ship and expand to developer-focused use cases (geocoding, GeoJSON, batch POI validation).
+The benchmark framework, all prompts, and raw results will be open-sourced soon. We plan to rerun it as new model versions ship and expand to developer-focused use cases (geocoding, GeoJSON, batch POI validation).
 
 [voygr.tech](https://voygr.tech) · [founders@voygr.tech](mailto:founders@voygr.tech)
