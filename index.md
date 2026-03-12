@@ -11,7 +11,7 @@ This page presents the key findings. For the complete analysis (per-category bre
 ## Overall Performance
 
 <p align="center">
-  <img src="../data/Overall_Performance.png" alt="Overall Performance by Provider and Search Config" width="700">
+  <img src="data/Overall_Performance.png" alt="Overall Performance by Provider and Search Config" width="700">
 </p>
 
 <table>
@@ -78,7 +78,7 @@ We asked Claude (without search) to rank the top 5 yoga studios in Hawthorne Dis
 Without search, **1 in 5 places Claude recommends** has a fatal flaw: fabricated, permanently closed, or wrong location. Even Perplexity, a search-native product, has a 12% failure rate with search enabled.
 
 <p align="center">
-  <img src="../data/Share_of_POIs_flawed.png" alt="Share of POIs with Fatal Flaws by Provider and Search Config" width="700" style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px;">
+  <img src="data/Share_of_POIs_flawed.png" alt="Share of POIs with Fatal Flaws by Provider and Search Config" width="700" style="border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px;">
 </p>
 
 | Failure Type | What Happens | Example |
