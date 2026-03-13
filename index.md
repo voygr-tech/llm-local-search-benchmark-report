@@ -258,7 +258,7 @@ The failure modes we found (fabricated places, closed venues, wrong locations) a
 
 Pass in a place name and location from any LLM response and get back: existence verification, operating status, name/category resolution, and location constraint checks. These are the exact checks that would have caught every fatal flaw in this benchmark.
 
-**[Try the API →](https://PLACEHOLDER_API_DOCS_URL)** · [See the docs on GitHub](https://PLACEHOLDER_API_REPO_URL)
+**[Try the API →](https://github.com/voygr-tech/dev-tools)**
 
 ---
 
