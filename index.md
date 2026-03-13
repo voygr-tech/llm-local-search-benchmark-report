@@ -269,7 +269,7 @@ The complete analysis includes:
 
 **[Download the Full Report (PDF) →](https://PLACEHOLDER_EMAIL_CAPTURE_URL)**
 
-<form id="pdf-form" action="https://formspree.io/f/xzdjglpg" method="POST" class="report-form">
+<form id="pdf-form" action="https://formspree.io/f/xzdjglpg" method="POST" class="report-form" onsubmit="handleFormSubmit(event)">
   <div class="name-row">
     <input type="text" name="first_name" placeholder="First Name" required class="form-input">
     <input type="text" name="last_name" placeholder="Last Name" required class="form-input">
@@ -281,12 +281,14 @@ The complete analysis includes:
 </form>
 
 <script>
-  var form = document.getElementById("pdf-form");
-  
-  form.addEventListener("submit", function(event) {
-    event.preventDefault(); // This stops Formspree's annoying redirect screen
+  function handleFormSubmit(event) {
+    // 1. Instantly stop Formspree from opening its own page
+    event.preventDefault(); 
     
+    var form = event.target;
     var data = new FormData(form);
+    
+    // 2. Send the data silently in the background
     fetch(form.action, {
       method: form.method,
       body: data,
@@ -295,13 +297,15 @@ The complete analysis includes:
       }
     }).then(response => {
       if (response.ok) {
-        // Form submitted silently! Now force the instant redirect to the raw PDF:
+        // 3. Success! Instantly bounce the user to the raw PDF
         window.location.href = "https://raw.githubusercontent.com/ibukeev-voygr/llm-geospatial-benchmark-report/main/Benchmarking_LLMs_on_Local_Search_Q1_2026_Consumer.pdf";
       } else {
-        alert("Oops! There was a problem submitting your form.");
+        alert("Oops! Formspree blocked the submission. You might need to submit it once without the script to clear their spam filter.");
       }
+    }).catch(error => {
+      alert("Network error submitting the form.");
     });
-  });
+  }
 </script>
 
 ---
