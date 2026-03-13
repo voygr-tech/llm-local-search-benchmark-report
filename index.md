@@ -60,12 +60,12 @@ OpenAI leads by 4.3 points. No single provider wins everything, though. Rankings
 
 Averages hide the real story. The differentiator isn't the mean; it's how often things go *badly* wrong:
 
-| Provider | Scored 90+ | Scored <70 |
-|---|---|---|
-| **OpenAI ON** | 69% | 8% |
-| **Gemini ON** | 59% | 16% |
-| **Claude ON** | 52% | 15% |
-| **Perplexity ON** | 37% | 24% |
+| Provider | Scored 90+ | Scored <70 | Std Dev |
+|---|---|---|---|
+| **OpenAI ON** | 69% | 8% | 13.2 |
+| **Gemini ON** | 59% | 16% | 17.5 |
+| **Claude ON** | 52% | 15% | 16.4 |
+| **Perplexity ON** | 37% | 24% | 19.2 |
 
 OpenAI scores 90+ on 7 out of 10 prompts. Perplexity scores below 70 on nearly 1 in 4. A product built on these APIs is only as good as its worst response.
 
@@ -189,6 +189,18 @@ Rankings shift dramatically by task type:
 We split prompts into USA/Western Europe vs Rest of World. The gap is modest on averages (+1 to +3 points) but explodes on specific tasks: reservation prompts for ROW restaurants are dramatically harder. Well-known ROW landmarks (Grand Bazaar Istanbul: 99.2, Ghibli Museum: 98.5) perform at Western levels. The gap isn't geography; it's data coverage.
 
 > The full report includes search ON vs OFF scores for all 7 configs across all 5 categories, the geographic gap breakdown by task type, and the complete constraint fidelity analysis.
+
+---
+
+## Finding 4: The Places Are Real, But Not What You Asked For
+
+Constraint fidelity (does the response match what you *specifically* asked for?) is where providers diverge most: a 16-point gap between OpenAI (85%) and Perplexity (69%).
+
+Ask for "affordable rooftop bars in Gangnam, Seoul" and every model returns real, verified venues. But half are champagne lounges with $30 cocktails. Claude ON scored 99% on foundational accuracy for this prompt (all 5 places exist) but just 12/30 on constraint fidelity. No provider scored above 12/30. "Affordable rooftop bar in Gangnam" is close to an oxymoron, and no model told the user that.
+
+The pattern repeats on negative constraints ("not touristy," "no chains," "walk-ins only"). Verifying the *absence* of something is fundamentally harder than confirming its presence. These prompts dominate the hardest-scoring set in the benchmark.
+
+> The full report includes the complete constraint fidelity analysis: budget constraints, subjective constraints, negative constraints, and where each provider breaks down.
 
 ---
 
