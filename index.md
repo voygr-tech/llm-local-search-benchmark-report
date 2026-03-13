@@ -1,4 +1,4 @@
-# LLM Local Search Benchmark: How Claude, GPT, Gemini, and Perplexity Handle Real-World Place Queries
+# Benchmarking LLMs on Local Search & Discovery
 
 > LLMs can write poetry and pass bar exams, but ask them to find an open restaurant nearby and they'll confidently send you to a place that closed two years ago.
 
