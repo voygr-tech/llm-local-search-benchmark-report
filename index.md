@@ -267,43 +267,106 @@ The complete analysis includes:
 - **Constraint fidelity analysis**: budget constraints, subjective constraints, negative constraints
 - **Full evaluation methodology**, rubric design, judge reliability, and all 345 benchmark prompts
 
-**[Download the Full Report (PDF) →](https://PLACEHOLDER_EMAIL_CAPTURE_URL)**
+{% comment %} 
+**[Download the Full Report (PDF) →](https://PLACEHOLDER EMAIL CAPTURE URL)** {% endcomment %}
 
-<form id="pdf-form" action="https://formspree.io/f/xzdjglpg" method="POST" class="report-form" onsubmit="handleFormSubmit(event)">
-  <div class="name-row">
-    <input type="text" name="first_name" placeholder="First Name" required class="form-input">
-    <input type="text" name="last_name" placeholder="Last Name" required class="form-input">
-  </div>
-  <input type="text" name="company" placeholder="Company Name" required class="form-input">
-  <input type="email" name="email" placeholder="Work Email Address" required class="form-input">
-  
-  <button type="submit" class="submit-button">Get the Full Report</button>
-</form>
+<style>
+  .report-form-container {
+    max-width: 450px;
+    margin: 25px 0;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.03); /* Very subtle highlight */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+  }
+  .report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .name-row {
+    display: flex;
+    gap: 15px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 12px;
+    background-color: #121212; /* Darker than the background */
+    border: 1px solid #333;
+    color: #fff; /* White text when they type */
+    font-family: inherit; /* Inherits your monospace hacker font */
+    font-size: 15px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+  }
+  .form-input::placeholder {
+    color: #666; /* Dimmed out placeholders */
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: #b5e853; /* This is the standard Jekyll hacker-theme green */
+    box-shadow: 0 0 5px rgba(181, 232, 83, 0.2);
+  }
+  .submit-button {
+    padding: 14px;
+    background-color: #b5e853; /* Match the hacker green */
+    color: #111; /* Dark text for contrast */
+    border: none;
+    font-family: inherit;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+    margin-top: 5px;
+  }
+  .submit-button:hover {
+    opacity: 0.8;
+  }
+</style>
+
+<div class="report-form-container">
+  <form id="pdf-form" action="https://formspree.io/f/xzdjglpg" method="POST" class="report-form" onsubmit="handleFormSubmit(event)">
+    <div class="name-row">
+      <input type="text" name="first_name" placeholder="First Name" required class="form-input">
+      <input type="text" name="last_name" placeholder="Last Name" required class="form-input">
+    </div>
+    <input type="text" name="company" placeholder="Company Name" required class="form-input">
+    <input type="email" name="email" placeholder="Work Email Address" required class="form-input">
+    
+    <button type="submit" class="submit-button">Get the Full Report</button>
+  </form>
+</div>
 
 <script>
   function handleFormSubmit(event) {
-    // 1. Instantly stop Formspree from opening its own page
     event.preventDefault(); 
-    
     var form = event.target;
     var data = new FormData(form);
     
-    // 2. Send the data silently in the background
+    // Change button text to show it's working
+    var btn = form.querySelector('.submit-button');
+    var originalText = btn.innerText;
+    btn.innerText = "Loading PDF...";
+    btn.style.opacity = "0.7";
+    
     fetch(form.action, {
       method: form.method,
       body: data,
-      headers: {
-        'Accept': 'application/json'
-      }
+      headers: { 'Accept': 'application/json' }
     }).then(response => {
       if (response.ok) {
-        // 3. Success! Instantly bounce the user to the raw PDF
         window.location.href = "https://raw.githubusercontent.com/ibukeev-voygr/llm-geospatial-benchmark-report/main/Benchmarking_LLMs_on_Local_Search_Q1_2026_Consumer.pdf";
       } else {
-        alert("Oops! Formspree blocked the submission. You might need to submit it once without the script to clear their spam filter.");
+        alert("Oops! Formspree blocked the submission.");
+        btn.innerText = originalText;
+        btn.style.opacity = "1";
       }
     }).catch(error => {
       alert("Network error submitting the form.");
+      btn.innerText = originalText;
+      btn.style.opacity = "1";
     });
   }
 </script>
