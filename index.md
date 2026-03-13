@@ -326,7 +326,7 @@ The complete analysis includes:
   
   <input type="email" name="email" placeholder="Work Email Address" required class="form-input">
   
-  <input type="hidden" name="_next" value="https://voygr-tech.github.io/llm-local-search-benchmark-report/YOUR_REPORT_NAME.pdf">
+  <input type="hidden" name="_next" value="https://github.com/ibukeev-voygr/llm-geospatial-benchmark-report/blob/main/Benchmarking_LLMs_on_Local_Search_Q1_2026_Consumer.pdf">
   
   <button type="submit" class="submit-button">Get the Full Report</button>
 </form>
