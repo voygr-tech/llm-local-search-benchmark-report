@@ -1,10 +1,12 @@
-# Benchmarking LLMs on Local Search & Discovery: How Claude, GPT, Gemini, and Perplexity Handle Real-World Place Queries
+# LLM Local Search Benchmark: How Claude, GPT, Gemini, and Perplexity Handle Real-World Place Queries
 
 > LLMs can write poetry and pass bar exams, but ask them to find an open restaurant nearby and they'll confidently send you to a place that closed two years ago.
 
 We tested **4 leading LLMs** on **345 real-world local search prompts** (finding restaurants, checking hours, planning routes, booking tables) across **50+ cities on 6 continents**. Each provider was tested with and without web search (**2,415 total evaluations**). Every recommended place was verified against Google Search and Google Maps.
 
 This page presents the key findings. For the complete analysis (per-category breakdowns, full failure taxonomy, geographic gap deep dive, methodology details, and all 345 benchmark prompts), **[get the full report](#get-the-full-report)**.
+
+Disclosure: This benchmark came out of our work at VOYGR, where we're building an API to help address exactly these kinds of failures for AI agents and developers - verifying whether businesses LLMs recommend are actually open, at the right address, etc.
 
 ---
 
@@ -204,6 +206,23 @@ The pattern repeats on negative constraints ("not touristy," "no chains," "walk-
 
 ---
 
+## A Note for Builders: Scores Don't Capture Developer Experience
+
+Gemini was the hardest API to benchmark by a wide margin — and these are the same issues any developer will hit at scale:
+
+- **Token truncation**: Gemini's thinking consumes tokens from the output budget. 75% of offline Explore responses were truncated mid-sentence. The `thinking_budget` parameter meant to fix this is ineffective.
+- **Grounding rate limits**: Google Search and Maps grounding has much tighter rate limits than non-grounded calls. Our entity verification pipeline had to stop and wait hours — sometimes up to 24 hours — before resuming. What should have taken hours took days.
+- **RECITATION errors**: Search grounding frequently triggers the model's citation filter, returning nothing usable. We built a 10-attempt, 5-tier retry system that progressively disables grounding tools — meaning a chunk of evaluations ran without the search verification we wanted.
+- **Safety blocks and empty responses**: Additional failure modes requiring their own retry strategies.
+
+The issues hit us twice: the token truncation bug silently ate output during response generation (no equivalent issue with OpenAI, Anthropic, or Perplexity), and the grounding-specific errors (RECITATION, rate limits, safety blocks) plagued our evaluation pipeline. We chose Gemini as judge *because* of Search and Maps grounding — no other provider offers real-time Maps data for entity verification — but using it reliably at scale required significant engineering overhead.
+
+Gemini's output quality *when it works* is excellent — best foundational accuracy, best Share scores. But if you're building on Gemini at scale, factor in the DX cost.
+
+> The full report includes the complete developer experience analysis with specific error rates and workarounds.
+
+---
+
 ## What This Means If You're Building on LLM APIs
 
 1. **Raw LLM output is not production-ready.** Even OpenAI at 90.7 has an 8% catastrophic failure rate. You need a verification layer: existence checks, operating status, location constraints.
@@ -252,11 +271,11 @@ The complete analysis includes:
 
 ---
 
-## Bridging the Gap: Point Validation API
+## Bridging the Gap: Business Validation API
 
-The failure modes we found (fabricated places, closed venues, wrong locations) are verifiable, automatable checks. We built a **Point Validation API** that sits between LLM output and your users, catching these failures before they reach production.
+The failure modes we found (fabricated places, closed venues, wrong locations) are verifiable, automatable checks. We built a **Business Validation API** designed for AI developers and agents, catching these failures before they reach production.
 
-Pass in a place name and location from any LLM response and get back: existence verification, operating status, name/category resolution, and location constraint checks. These are the exact checks that would have caught every fatal flaw in this benchmark.
+Pass in a place name and address from any LLM response and get back: existence verification and operating status. These are the exact checks that would have caught fatal flaws in this benchmark.
 
 **[Try the API →](https://dev.voygr.tech/checkout)** · [See the docs on GitHub](https://github.com/voygr-tech/dev-tools)
 
