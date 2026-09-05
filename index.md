@@ -1,3 +1,6 @@
+---
+canonical_url: https://voygr.tech/report/
+---
 # LLM Local Search Benchmark: How Claude, GPT, Gemini, and Perplexity Handle Real-World Place Queries
 
 > LLMs can write poetry and pass bar exams, but ask them to find an open restaurant nearby and they'll confidently send you to a place that closed two years ago.
